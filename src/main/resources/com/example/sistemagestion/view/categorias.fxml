@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.sistemagestion.controller.CategoriaController">
+    <top>
+        <VBox spacing="8" style="-fx-background-color: #173b70;">
+            <padding>
+                <Insets top="22" right="24" bottom="22" left="24"/>
+            </padding>
+            <Label text="GESTIÓN DE CATEGORÍAS"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Registra y administra las categorías de productos"
+                   style="-fx-font-size: 13px; -fx-text-fill: #dbeafe;"/>
+        </VBox>
+    </top>
+    <center>
+        <VBox spacing="18">
+            <padding>
+                <Insets top="24" right="24" bottom="24" left="24"/>
+            </padding>
+            <Label text="Datos de la categoría"
+                   style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <GridPane hgap="12" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="100"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+                <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNombre" promptText="Ej. Bebidas"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Descripción:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextArea fx:id="txtDescripcion" promptText="Descripción opcional"
+                          prefRowCount="2" wrapText="true"
+                          GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            </GridPane>
+            <HBox spacing="10">
+                <Button text="Registrar categoría" onAction="#registrarCategoria"
+                        style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                <Button fx:id="btnDesactivar" text="Desactivar seleccionada"
+                        onAction="#desactivarCategoria"
+                        style="-fx-background-color: #dc2626; -fx-text-fill: white;"/>
+                <Button text="Regresar al menú principal"
+                        onAction="#regresarMenu"
+                        style="-fx-background-color: #64748b; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            </HBox>
+            <Label text="Categorías registradas"
+                   style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <TableView fx:id="tablaCategorias" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="70"/>
+                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="200"/>
+                    <TableColumn fx:id="colDescripcion" text="Descripción" prefWidth="300"/>
+                    <TableColumn fx:id="colActivo" text="Activo" prefWidth="100"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

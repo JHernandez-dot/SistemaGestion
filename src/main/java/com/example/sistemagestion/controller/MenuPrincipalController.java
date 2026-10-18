@@ -53,14 +53,25 @@ public class MenuPrincipalController {
 
     @FXML
     private void mostrarProductos() {
-        mostrarMensaje("Módulo de productos: pendiente de implementar.");
-    }
+        abrirVentana(
+                "/com/example/sistemagestion/view/productos.fxml",
+                "Gestión de Productos"
+        );
 
+        Stage stageActual = (Stage) lblEstado.getScene().getWindow();
+        stageActual.close();
+    }
     @FXML
     private void mostrarCategorias() {
-        mostrarMensaje("Módulo de categorías: pendiente de implementar.");
-    }
+        abrirVentana(
+                "/com/example/sistemagestion/view/categorias.fxml",
+                "Gestión de Categorías"
+        );
 
+        // Cerrar la ventana del menú principal
+        Stage stageActual = (Stage) lblEstado.getScene().getWindow();
+        stageActual.close();
+    }
     @FXML
     private void mostrarInventario() {
         mostrarMensaje("Módulo de inventario: pendiente de implementar.");
@@ -85,13 +96,32 @@ public class MenuPrincipalController {
         lblEstado.setText(mensaje);
     }
 
+    private void abrirVentana(String ruta, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(ruta)
+            );
+
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle(titulo);
+            stage.setScene(new Scene(root, 1000, 650));
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (IOException | RuntimeException e) {
+            lblEstado.setText("No se pudo abrir la pantalla: " + titulo);
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void cerrarSesion() {
         try {
-            // Ajusta esta ruta si login.fxml está en otra ubicación.
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource(
-                            "/com.example.sistemagestion/view/login.fxml"
+                            "/com/example/sistemagestion/view/login.fxml"
                     )
             );
 
@@ -101,6 +131,7 @@ public class MenuPrincipalController {
             stage.setScene(new Scene(root));
             stage.setTitle("Sistema de Gestión - Inicio de sesión");
             stage.centerOnScreen();
+            stage.show();
 
         } catch (IOException | RuntimeException e) {
             lblEstado.setText(
@@ -109,4 +140,5 @@ public class MenuPrincipalController {
             e.printStackTrace();
         }
     }
+
 }
