@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.sistemagestion.controller.LoginController"
+           prefWidth="900"
+           prefHeight="550"
+           style="-fx-background-color: #f1f5f9;">
+
+    <HBox maxWidth="800"
+          maxHeight="420"
+          style="-fx-background-color: white;
+                 -fx-background-radius: 18;">
+
+        <VBox alignment="CENTER"
+              spacing="20"
+              prefWidth="350"
+              style="-fx-background-color: #172554;
+                     -fx-background-radius: 18 0 0 18;">
+
+            <padding>
+                <Insets top="30" right="25"
+                        bottom="30" left="25"/>
+            </padding>
+
+            <Label text="SISTEMA DE GESTIÓN"
+                   style="-fx-text-fill: #93c5fd;
+                          -fx-font-size: 14px;
+                          -fx-font-weight: bold;"/>
+
+            <Label text="Bienvenido"
+                   style="-fx-text-fill: white;
+                          -fx-font-size: 32px;
+                          -fx-font-weight: bold;"/>
+
+
+            <Label text="Administra tus operaciones&#10;de forma sencilla y segura."
+                   wrapText="true"
+                   alignment="CENTER"
+                   style="-fx-text-fill: #cbd5e1; -fx-font-size: 15px;" />
+
+        </VBox>
+
+        <VBox alignment="CENTER"
+              spacing="15"
+              prefWidth="450">
+
+            <padding>
+                <Insets top="30" right="45"
+                        bottom="30" left="45"/>
+            </padding>
+
+            <Label text="Iniciar sesión"
+                   style="-fx-font-size: 28px;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: #172554;"/>
+
+            <Label text="Ingresa tus credenciales"
+                   style="-fx-text-fill: #64748b;"/>
+
+            <TextField fx:id="txtUsuario"
+                       promptText="Nombre de usuario"
+                       prefHeight="42"
+                       maxWidth="300"/>
+
+            <PasswordField fx:id="txtPassword"
+                           promptText="Contraseña"
+                           prefHeight="42"
+                           maxWidth="300"/>
+
+            <Button text="INGRESAR"
+                    onAction="#iniciarSesion"
+                    prefHeight="42"
+                    maxWidth="300"
+                    style="-fx-background-color: #2546eb;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;
+                           -fx-background-radius: 7;
+                           -fx-cursor: hand;"/>
+
+            <Label fx:id="lblMensaje"
+                   wrapText="true"
+                   style="-fx-text-fill: #dc2626;" />
+        </VBox>
+    </HBox>
+</StackPane>

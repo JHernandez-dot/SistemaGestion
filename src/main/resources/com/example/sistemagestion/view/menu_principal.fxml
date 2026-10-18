@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.sistemagestion.controller.MenuPrincipalController"
+            prefWidth="1200" prefHeight="760"
+            style="-fx-background-color: #f1f5f9;">
+
+    <!-- BARRA LATERAL -->
+    <left>
+        <VBox prefWidth="220" spacing="10"
+              style="-fx-background-color: #102448;">
+            <padding>
+                <Insets top="25" right="14" bottom="18" left="14"/>
+            </padding>
+
+            <Label text="🛒 SUPERMERCADO"
+                   style="-fx-text-fill: white; -fx-font-size: 19px; -fx-font-weight: bold;"
+                   wrapText="true"/>
+            <Label text="SISTEMA DE GESTIÓN"
+                   style="-fx-text-fill: #93c5fd; -fx-font-size: 11px;"/>
+
+            <Region VBox.vgrow="ALWAYS" />
+
+            <Button text="⌂   Inicio" onAction="#mostrarInicio"
+                    maxWidth="Infinity" prefHeight="42"
+                    style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 8;"/>
+
+            <Button text="🛒   Ventas" onAction="#mostrarVentas"
+                    maxWidth="Infinity" prefHeight="42" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;"/>
+
+            <Button text="▣   Productos" onAction="#mostrarProductos"
+                    maxWidth="Infinity" prefHeight="42" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;"/>
+
+            <Button text="◆   Categorías" onAction="#mostrarCategorias"
+                    maxWidth="Infinity" prefHeight="42" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;"/>
+
+            <Button text="▦   Inventario" onAction="#mostrarInventario"
+                    maxWidth="Infinity" prefHeight="42" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;"/>
+
+            <Button text="♙   Clientes" onAction="#mostrarClientes"
+                    maxWidth="Infinity" prefHeight="42" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;"/>
+
+            <Button text="🚚   Proveedores" onAction="#mostrarProveedores"
+                    maxWidth="Infinity" prefHeight="42" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;"/>
+
+            <Button text="▤   Reportes" onAction="#mostrarReportes"
+                    maxWidth="Infinity" prefHeight="42" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Separator opacity="0.35"/>
+            <Label text="Usuario: Administrador"
+                   style="-fx-text-fill: white; -fx-font-size: 12px;"/>
+            <Button text="↪   Cerrar sesión"
+                    onAction="#cerrarSesion"
+                    maxWidth="Infinity" prefHeight="40"
+                    style="-fx-background-color: #263b5d; -fx-text-fill: white; -fx-background-radius: 8;"/>
+        </VBox>
+    </left>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                    style="-fx-background: #f1f5f9; -fx-background-color: transparent;">
+            <VBox spacing="20">
+                <padding>
+                    <Insets top="25" right="25" bottom="25" left="25"/>
+                </padding>
+
+                <VBox spacing="7" style="-fx-background-color: #173c70; -fx-background-radius: 14;">
+                    <padding>
+                        <Insets top="25" right="25" bottom="25" left="25"/>
+                    </padding>
+                    <Label text="BIENVENIDO AL"
+                           style="-fx-text-fill: #bfdbfe; -fx-font-size: 13px;"/>
+                    <Label text="Sistema de Gestión"
+                           style="-fx-text-fill: white; -fx-font-size: 29px; -fx-font-weight: bold;"/>
+                    <Label text="SUPERMERCADO"
+                           style="-fx-text-fill: #7dd3fc; -fx-font-size: 25px; -fx-font-weight: bold;"/>
+                    <Label text="Administra productos, ventas e inventario desde un solo lugar."
+                           wrapText="true"
+                           style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+                    <Label fx:id="lblFecha"
+                           style="-fx-text-fill: #dbeafe; -fx-font-size: 12px;"/>
+                </VBox>
+
+                <!-- TARJETAS DE RESUMEN -->
+                <GridPane hgap="14" vgap="14">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="25" hgrow="ALWAYS"/>
+                        <ColumnConstraints percentWidth="25" hgrow="ALWAYS"/>
+                        <ColumnConstraints percentWidth="25" hgrow="ALWAYS"/>
+                        <ColumnConstraints percentWidth="25" hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <VBox GridPane.columnIndex="0" spacing="9"
+                          style="-fx-background-color: #10b981; -fx-background-radius: 12;">
+                        <padding><Insets top="18" right="14" bottom="18" left="14"/></padding>
+                        <Label text="VENTAS DE HOY" style="-fx-text-fill: white; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblVentas" text="Q 0.00"
+                               style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                        <Label text="Total vendido" style="-fx-text-fill: white;"/>
+                    </VBox>
+
+                    <VBox GridPane.columnIndex="1" spacing="9"
+                          style="-fx-background-color: #2583eb; -fx-background-radius: 12;">
+                        <padding><Insets top="18" right="14" bottom="18" left="14"/></padding>
+                        <Label text="PRODUCTOS" style="-fx-text-fill: white; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblProductos" text="0"
+                               style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                        <Label text="Registrados" style="-fx-text-fill: white;"/>
+                    </VBox>
+
+                    <VBox GridPane.columnIndex="2" spacing="9"
+                          style="-fx-background-color: #f59e0b; -fx-background-radius: 12;">
+                        <padding><Insets top="18" right="14" bottom="18" left="14"/></padding>
+                        <Label text="CLIENTES" style="-fx-text-fill: white; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblClientes" text="0"
+                               style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                        <Label text="Registrados" style="-fx-text-fill: white;"/>
+                    </VBox>
+
+                    <VBox GridPane.columnIndex="3" spacing="9"
+                          style="-fx-background-color: #ef4444; -fx-background-radius: 12;">
+                        <padding><Insets top="18" right="14" bottom="18" left="14"/></padding>
+                        <Label text="STOCK BAJO" style="-fx-text-fill: white; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblStockBajo" text="0"
+                               style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                        <Label text="Por reabastecer" style="-fx-text-fill: white;"/>
+                    </VBox>
+                </GridPane>
+
+                <Label text="Accesos rápidos"
+                       style="-fx-text-fill: #102448; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+                <GridPane hgap="14" vgap="14">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                        <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <VBox GridPane.columnIndex="0" spacing="8"
+                          style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e2e8f0; -fx-border-radius: 12;">
+                        <padding><Insets top="18" right="18" bottom="18" left="18"/></padding>
+                        <Label text="🛒  Nueva venta"
+                               style="-fx-text-fill: #102448; -fx-font-size: 17px; -fx-font-weight: bold;"/>
+                        <Label text="Registrar productos y cobrar al cliente."
+                               wrapText="true" style="-fx-text-fill: #64748b;"/>
+                        <Button text="Ir a ventas" onAction="#mostrarVentas"
+                                style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                    </VBox>
+
+                    <VBox GridPane.columnIndex="1" spacing="8"
+                          style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e2e8f0; -fx-border-radius: 12;">
+                        <padding><Insets top="18" right="18" bottom="18" left="18"/></padding>
+                        <Label text="▣  Gestionar productos"
+                               style="-fx-text-fill: #102448; -fx-font-size: 17px; -fx-font-weight: bold;"/>
+                        <Label text="Registrar, editar y consultar productos."
+                               wrapText="true" style="-fx-text-fill: #64748b;"/>
+                        <Button text="Ver productos" onAction="#mostrarProductos"
+                                style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                    </VBox>
+
+                    <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="8"
+                          style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e2e8f0; -fx-border-radius: 12;">
+                        <padding><Insets top="18" right="18" bottom="18" left="18"/></padding>
+                        <Label text="▦  Control de inventario"
+                               style="-fx-text-fill: #102448; -fx-font-size: 17px; -fx-font-weight: bold;"/>
+                        <Label text="Consulta existencias y productos por agotarse."
+                               wrapText="true" style="-fx-text-fill: #64748b;"/>
+                        <Button text="Ver inventario" onAction="#mostrarInventario"
+                                style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                    </VBox>
+
+                    <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="8"
+                          style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e2e8f0; -fx-border-radius: 12;">
+                        <padding><Insets top="18" right="18" bottom="18" left="18"/></padding>
+                        <Label text="▤  Reportes"
+                               style="-fx-text-fill: #102448; -fx-font-size: 17px; -fx-font-weight: bold;"/>
+                        <Label text="Consulta los resúmenes de ventas y productos."
+                               wrapText="true" style="-fx-text-fill: #64748b;"/>
+                        <Button text="Ver reportes" onAction="#mostrarReportes"
+                                style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                    </VBox>
+                </GridPane>
+
+                <Label fx:id="lblEstado"
+                       text="Sistema listo. Selecciona un módulo para continuar."
+                       wrapText="true"
+                       style="-fx-text-fill: #475569; -fx-font-size: 12px;"/>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
