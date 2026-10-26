@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.sistemagestion.controller.InventarioController">
+
+    <top>
+        <VBox spacing="10" style="-fx-background-color: #1f2937; -fx-padding: 16;">
+            <Label text="CONTROL DE INVENTARIO"
+                   style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+            <HBox spacing="8">
+                <TextField fx:id="txtBuscar"
+                           promptText="Buscar por nombre, SKU o código de barras"
+                           onAction="#buscar" HBox.hgrow="ALWAYS"/>
+                <Button text="Buscar" onAction="#buscar"/>
+                <Button text="Mostrar todos" onAction="#mostrarTodos"/>
+                <Button text="Regresar" onAction="#volverAlMenu"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="12" right="12" bottom="12" left="12"/>
+            </padding>
+
+            <Label text="Productos y existencias"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <TableView fx:id="tablaProductos" prefHeight="260">
+                <columns>
+                    <TableColumn fx:id="colCodigo" text="SKU" prefWidth="100"/>
+                    <TableColumn fx:id="colNombre" text="Producto" prefWidth="190"/>
+                    <TableColumn fx:id="colCategoria" text="Categoría" prefWidth="120"/>
+                    <TableColumn fx:id="colExistencia" text="Existencia" prefWidth="95"/>
+                    <TableColumn fx:id="colMinimo" text="Stock mínimo" prefWidth="100"/>
+                    <TableColumn fx:id="colUnidad" text="Unidad" prefWidth="85"/>
+                </columns>
+            </TableView>
+
+            <Label fx:id="lblSeleccionado" text="Selecciona un producto"/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Movimiento:"/>
+                <ComboBox fx:id="cmbTipo" prefWidth="130"/>
+                <Label text="Cantidad:"/>
+                <TextField fx:id="txtCantidad" promptText="Ej. 5" prefWidth="100"/>
+                <Label text="Motivo:"/>
+                <TextField fx:id="txtMotivo" promptText="Motivo del movimiento"
+                           HBox.hgrow="ALWAYS"/>
+                <Button text="Registrar" onAction="#registrarMovimiento"
+                        style="-fx-font-weight: bold;"/>
+            </HBox>
+
+            <Label text="Historial de movimientos"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <TableView fx:id="tablaMovimientos" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colFecha" text="Fecha" prefWidth="145"/>
+                    <TableColumn fx:id="colProductoMov" text="Producto" prefWidth="150"/>
+                    <TableColumn fx:id="colTipoMov" text="Tipo" prefWidth="80"/>
+                    <TableColumn fx:id="colCantidadMov" text="Variación" prefWidth="80"/>
+                    <TableColumn fx:id="colAnterior" text="Anterior" prefWidth="80"/>
+                    <TableColumn fx:id="colNueva" text="Nueva" prefWidth="80"/>
+                    <TableColumn fx:id="colMotivo" text="Motivo" prefWidth="190"/>
+                </columns>
+            </TableView>
+
+            <Label fx:id="lblEstado" text="Listo."
+                   style="-fx-text-fill: #2563eb;"/>
+        </VBox>
+    </center>
+</BorderPane>

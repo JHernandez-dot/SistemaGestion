@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.sistemagestion.controller.VentasController"
+      spacing="10"
+      prefWidth="1050"
+      prefHeight="760"
+      style="-fx-background-color: #f1f5f9;">
+
+    <padding>
+        <Insets top="20" right="22" bottom="20" left="22"/>
+    </padding>
+
+    <Label text="PUNTO DE VENTA"
+           style="-fx-font-size: 25px; -fx-font-weight: bold;"/>
+
+    <Label fx:id="lblUsuario" text="Cajero"/>
+    <Label fx:id="lblTurno" text="Verificando turno..."/>
+
+    <HBox spacing="10">
+        <TextField fx:id="txtBuscar"
+                   promptText="Buscar por nombre, SKU o código de barras"
+                   onAction="#buscarProductos"
+                   HBox.hgrow="ALWAYS"/>
+        <Button text="Buscar" onAction="#buscarProductos"/>
+        <Button text="Mostrar todos" onAction="#mostrarTodos"/>
+    </HBox>
+
+    <Label text="Productos disponibles"
+           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="tablaProductos" prefHeight="200" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colSku" text="SKU" prefWidth="120"/>
+            <TableColumn fx:id="colProducto" text="Producto" prefWidth="280"/>
+            <TableColumn fx:id="colPrecio" text="Precio (Q)" prefWidth="120"/>
+            <TableColumn fx:id="colExistencia" text="Existencia" prefWidth="120"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Cantidad:"/>
+        <TextField fx:id="txtCantidad" text="1" prefWidth="100"
+                   promptText="Cantidad"/>
+        <Button text="Agregar al carrito"
+                onAction="#agregarAlCarrito"
+                style="-fx-background-color: #1976d2; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <Label text="Carrito de compra"
+           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="tablaCarrito" prefHeight="150">
+        <columns>
+            <TableColumn fx:id="colCarritoProducto" text="Producto" prefWidth="300"/>
+            <TableColumn fx:id="colCarritoCantidad" text="Cantidad" prefWidth="120"/>
+            <TableColumn fx:id="colCarritoPrecio" text="Precio (Q)" prefWidth="130"/>
+            <TableColumn fx:id="colCarritoSubtotal" text="Subtotal (Q)" prefWidth="150"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button text="Quitar seleccionado" onAction="#quitarDelCarrito"/>
+        <Button text="Vaciar carrito" onAction="#vaciarCarrito"/>
+        <Label text="TOTAL:"/>
+        <Label fx:id="lblTotal" text="Q 0.00"
+               style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <Label text="Método de pago"
+           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Método:"/>
+        <ComboBox fx:id="cmbMetodoPago" prefWidth="180"
+                  promptText="Selecciona método"/>
+        <Label text="Efectivo (Q):"/>
+        <TextField fx:id="txtPagoEfectivo" text="0.00" prefWidth="110"/>
+        <Label text="Tarjeta (Q):"/>
+        <TextField fx:id="txtPagoTarjeta" text="0.00" prefWidth="110"/>
+        <Label text="Transferencia (Q):"/>
+        <TextField fx:id="txtPagoTransferencia" text="0.00" prefWidth="130"/>
+    </HBox>
+
+    <Label text="Para un pago mixto, distribuye el total entre los importes. La suma debe coincidir con el total de la venta."/>
+
+    <Label text="Observaciones (opcional)"/>
+    <TextArea fx:id="txtObservaciones" prefRowCount="2" wrapText="true"/>
+
+    <HBox spacing="10">
+        <Button text="← Volver al menú"
+                onAction="#volverAlMenu"/>
+        <Button text="CONFIRMAR VENTA"
+                onAction="#confirmarVenta"
+                style="-fx-background-color: #15803d; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+</VBox>

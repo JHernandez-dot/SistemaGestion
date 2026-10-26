@@ -1,8 +1,9 @@
 
 package com.example.sistemagestion.controller;
 
-import com.example.sistemagestion.controller.config.UsuarioDAO;
 import com.example.sistemagestion.controller.config.PasswordUtil;
+import com.example.sistemagestion.controller.config.UsuarioDAO;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -52,32 +53,84 @@ public class LoginController {
             String hash = usuarioDAO.obtenerHashPassword(usuario);
 
             if (hash == null || !PasswordUtil.verificar(password, hash)) {
-                lblMensaje.setText("Usuario o contraseña incorrectos.");
-                return;
-            }
+                usuarioDAO.registrarIntentoFallido(usuario);
 
-            if (!"ADMINISTRADOR".equalsIgnoreCase(
-                    usuarioAutenticado.getRol())) {
                 lblMensaje.setText(
-                        "No tienes acceso al menú de administración."
+                        "Usuario o contraseña incorrectos. "
+                                + "Después de 5 intentos fallidos, "
+                                + "la cuenta se bloqueará temporalmente."
                 );
                 return;
             }
 
+            usuarioDAO.restablecerIntentosFallidos(usuario);
+
+            String rol = usuarioAutenticado.getRol();
+
+            if (rol == null || rol.isBlank()) {
+                lblMensaje.setText(
+                        "El usuario no tiene un rol asignado."
+                );
+                return;
+            }
+
+            String rutaFXML;
+            String tituloVentana;
+            boolean maximizar;
+
+            switch (rol.trim().toUpperCase()) {
+                case "ADMINISTRADOR":
+                    rutaFXML =
+                            "/com/example/sistemagestion/view/menu_principal.fxml";
+                    tituloVentana = "Sistema de Gestión - Administrador";
+                    maximizar = true;
+                    break;
+
+                case "CAJERO":
+                    rutaFXML =
+                            "/com/example/sistemagestion/view/MenuCajero.fxml";
+                    tituloVentana = "Sistema de Gestión - Cajero";
+                    maximizar = true;
+                    break;
+
+                case "SUPERVISOR":
+                    lblMensaje.setText(
+                            "El menú del supervisor todavía está pendiente."
+                    );
+                    return;
+
+                default:
+                    lblMensaje.setText(
+                            "El rol asignado no tiene acceso al sistema."
+                    );
+                    return;
+            }
+
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource(
-                            "/com/example/sistemagestion/view/menu_principal.fxml"
-                    )
+                    getClass().getResource(rutaFXML)
             );
 
             Parent root = loader.load();
 
-            Stage stage = (Stage) txtUsuario
-                    .getScene().getWindow();
+            // Entregar la información del usuario al menú correspondiente.
+            if ("ADMINISTRADOR".equalsIgnoreCase(rol.trim())) {
+                MenuPrincipalController menuController =
+                        loader.getController();
+
+                menuController.setUsuarioAutenticado(usuarioAutenticado);
+
+            } else if ("CAJERO".equalsIgnoreCase(rol.trim())) {
+                MenuCajeroController menuController =
+                        loader.getController();
+
+                menuController.setUsuarioAutenticado(usuarioAutenticado);
+            }
+
+            Stage stage = (Stage) txtUsuario.getScene().getWindow();
 
             stage.setScene(new Scene(root));
-            stage.setTitle("Sistema de Gestión - Supermercado");
-            stage.setMaximized(true);
+            stage.setTitle(tituloVentana);
+            stage.setMaximized(maximizar);
             stage.show();
 
         } catch (SQLException e) {
@@ -88,7 +141,8 @@ public class LoginController {
 
         } catch (IOException | RuntimeException e) {
             lblMensaje.setText(
-                    "Error al abrir el menú principal."
+                    "No se pudo abrir el menú correspondiente. "
+                            + "Verifica que el archivo FXML y su controlador existan."
             );
             e.printStackTrace();
         }

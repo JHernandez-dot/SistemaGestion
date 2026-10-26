@@ -53,25 +53,27 @@ public class UsuarioDAO {
     public UsuarioAutenticado buscarPorUsername(String username)
             throws SQLException {
 
+
         String sql = """
-            SELECT
-                u.usuario_id,
-                u.username,
-                u.nombre_completo,
-                u.password_hash,
-                u.activo,
-                u.intentos_fallidos,
-                u.bloqueado_hasta,
-                r.nombre AS rol
-            FROM usuarios u
-            LEFT JOIN usuario_roles ur
-                ON ur.usuario_id = u.usuario_id
-            LEFT JOIN roles r
-                ON r.rol_id = ur.rol_id
-            WHERE u.username = ?
-            ORDER BY r.nivel DESC NULLS LAST
-            LIMIT 1
-            """;
+    SELECT
+        u.usuario_id,
+        u.username,
+        u.nombre_completo,
+        u.activo,
+        u.intentos_fallidos,
+        u.bloqueado_hasta,
+        r.nombre AS rol
+    FROM usuarios u
+    INNER JOIN usuario_roles ur
+        ON ur.usuario_id = u.usuario_id
+    INNER JOIN roles r
+        ON r.rol_id = ur.rol_id
+    WHERE u.username = ?
+      AND u.activo = TRUE
+      AND r.activo = TRUE
+    ORDER BY r.nivel DESC
+    LIMIT 1
+    """;
 
         try (Connection conexion = ConexionDB.conectar();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
@@ -126,4 +128,61 @@ public class UsuarioDAO {
             }
         }
     }
+
+    public void registrarIntentoFallido(String username)
+            throws SQLException {
+
+        String sql = """
+            UPDATE usuarios
+            SET intentos_fallidos =
+                CASE
+                    WHEN COALESCE(intentos_fallidos, 0) + 1 >= 5
+                    THEN 0
+                    ELSE COALESCE(intentos_fallidos, 0) + 1
+                END,
+                bloqueado_hasta =
+                CASE
+                    WHEN COALESCE(intentos_fallidos, 0) + 1 >= 5
+                    THEN ?
+                    ELSE bloqueado_hasta
+                END
+            WHERE username = ?
+              AND activo = TRUE
+              AND (
+                  bloqueado_hasta IS NULL
+                  OR bloqueado_hasta <= CURRENT_TIMESTAMP
+              )
+            """;
+
+        Timestamp fechaBloqueo = Timestamp.valueOf(
+                LocalDateTime.now().plusMinutes(15)
+        );
+
+        try (Connection conexion = ConexionDB.conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setTimestamp(1, fechaBloqueo);
+            ps.setString(2, username);
+            ps.executeUpdate();
+        }
+    }
+
+    public void restablecerIntentosFallidos(String username)
+            throws SQLException {
+
+        String sql = """
+            UPDATE usuarios
+            SET intentos_fallidos = 0,
+                bloqueado_hasta = NULL
+            WHERE username = ?
+            """;
+
+        try (Connection conexion = ConexionDB.conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+            ps.executeUpdate();
+        }
+    }
+
 }
